@@ -157,4 +157,20 @@ class GreedyBustersAgent(BustersAgent):
                                             in enumerate(self.ghostBeliefs)
                                             if livingGhosts[i+1]]
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+
+        bestPositionsOrdered = util.PriorityQueue()
+        for p in livingGhostPositionDistributions:
+            #order the positions based on the distance from the position in the ghost distribution and the pacman
+            localMax = p.argMax()
+            bestPositionsOrdered.push(localMax, self.distancer.getDistance(localMax, pacmanPosition))
+        bestPosition = bestPositionsOrdered.pop()
+
+        #Now choose what action based on the bestPosition
+        for action in legal:
+            dis1 = self.distancer.getDistance(pacmanPosition, bestPosition)
+            dis2 = self.distancer.getDistance(Actions.getSuccessor(pacmanPosition, action), bestPosition)
+            if dis1 > dis2 :
+                return action
+
+        #First compute  most likely position that has not been captured
+        #util.raiseNotDefined()
