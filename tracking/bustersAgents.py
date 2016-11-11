@@ -167,10 +167,9 @@ class GreedyBustersAgent(BustersAgent):
 
         #Now choose what action based on the bestPosition
         for action in legal:
-            dis1 = self.distancer.getDistance(pacmanPosition, bestPosition)
-            dis2 = self.distancer.getDistance(Actions.getSuccessor(pacmanPosition, action), bestPosition)
-            if dis1 > dis2 :
+            currentDist = self.distancer.getDistance(pacmanPosition, bestPosition)
+            tempDist = self.distancer.getDistance(Actions.getSuccessor(pacmanPosition, action), bestPosition)
+            if currentDist > tempDist:
                 return action
 
-        #First compute  most likely position that has not been captured
         #util.raiseNotDefined()
